@@ -27,19 +27,20 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
-  @Patch(':id')
-  @ApiOperation({
-    summary: 'Editar um usuário pelo ID',
-  })
-  update(@Param('id') id: string, @Body() dto: UpdateUsersDto): Promise<Users> {
-    return this.usersService.update(id, dto);
-  }
-
   @Post('create')
   @ApiOperation({
     summary: 'Criar um usuário',
   })
   create(@Body() dto: CreateUsersDto): Promise<Users> {
     return this.usersService.create(dto);
+  }
+
+  @Get()
+  @Patch(':id')
+  @ApiOperation({
+    summary: 'Editar um usuário pelo ID',
+  })
+  update(@Param('id') id: string, @Body() dto: UpdateUsersDto): Promise<Users> {
+    return this.usersService.update(id, dto);
   }
 }

@@ -13,24 +13,31 @@ export class UsersService {
   }
 
   findOne(id: string): Promise<Users> {
-    return this.prisma.user.findUnique({ where: { id } });
+    return this.prisma.user.findUnique({ where: { id }})
   }
 
   create(dto: CreateUsersDto): Promise<Users> {
     const data: Users = {
       ...dto,
-      name: '',
-      email: '',
-      password: '',
+      name: "",
+      email: "",
+      password: "",
       cpf: 0,
-      isAdmin: ''
+      isAdmin: ""
     };
  
-    return this.prisma.user.create({ data })
+    return this.prisma.user.create({ data });
   }
 
   update(id: string, dto: UpdateUsersDto): Promise<Users> {
-    const data: Partial<Users> = { ...dto };
+    const data: Partial<Users> = { 
+      ...dto,
+      name: "",
+      email: "",
+      password: "",
+      cpf: 0,
+      isAdmin: ""
+     };
 
     return this.prisma.user.update({
       where: { id },

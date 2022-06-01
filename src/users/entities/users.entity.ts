@@ -1,9 +1,9 @@
 export class Users {
-    id?: String;
+    id?: string;
     number: number;
-    name: String;
-    email: String;
-    password: String;
+    name: string;
+    email: string;
+    password: string;
     cpf: number;
-    isAdmin: String
+    isAdmin: string
   }
