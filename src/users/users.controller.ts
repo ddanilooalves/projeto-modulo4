@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Patch } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Patch, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { CreateUsersDto } from './dto/create-users.dto';
 import { Users } from './entities/users.entity';
 import { UsersService } from './users.service';
@@ -43,4 +43,12 @@ export class UsersController {
     return this.usersService.update(id, dto);
   }
   
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({
+    summary: 'Deletar usuário pelo ID'
+  })
+  delete(@Param('id') id: string) {
+    this.usersService.delete(id);
+  }
 }

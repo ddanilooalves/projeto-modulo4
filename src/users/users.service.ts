@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma/prisma.service';
 import { CreateUsersDto } from './dto/create-users.dto';
 import { UpdateUsersDto } from './dto/update-table.dto';
@@ -12,8 +12,12 @@ export class UsersService {
     return this.prisma.user.findMany();
   }
 
-  findOne(id: string): Promise<Users> {
-    return this.prisma.user.findUnique({ where: { id }})
+  async findOne(id: string): Promise<Users> {
+    const record = await this.prisma.user.findUnique({ where: { id } });
+    if (!record) {
+      throw new NotFoundException(`Usuário com ID ${id} não localizado!`)
+    }
+    return record
   }
 
   create(dto: CreateUsersDto): Promise<Users> {
@@ -29,5 +33,9 @@ export class UsersService {
       where: { id },
       data,
     });
+  }
+
+  async delete(id: string) {
+    await this.prisma.user.delete({ where: { id }});
   }
 }
