@@ -6,14 +6,9 @@ export class CreateUsersDto {
     description: 'Insira os dados',
   })
   number: number;
-
   name: string;
-
   email: string;
-
   password: string;
-
   cpf: number;
-  
   isAdmin: string
 }

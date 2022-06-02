@@ -1,9 +1,12 @@
 export class Games {
-    name: String;
-    coverImageURL: String;
-    description: String;
-    year: String;
+    id?: string;
+    name: string;
+    coverImageUrl: string;
+    description: string;
+    year: number;
     imdbScore: number;
-    trailerYouTubeUrl: String;
-    GameplayYouTubeUrl: String
+    trailerYouTubeUrl: string;
+    gameplayYouTubeUrl: string;
+    createdAt?: Date;
+    updatedAt?: Date
   }
