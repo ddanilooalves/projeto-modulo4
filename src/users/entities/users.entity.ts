@@ -5,5 +5,7 @@ export class Users {
     email: string;
     password: string;
     cpf: number;
-    isAdmin: string
+    isAdmin: string;
+    createdAt?: Date;
+    updatedAt?: Date
   }

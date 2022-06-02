@@ -17,27 +17,13 @@ export class UsersService {
   }
 
   create(dto: CreateUsersDto): Promise<Users> {
-    const data: Users = {
-      ...dto,
-      name: "",
-      email: "",
-      password: "",
-      cpf: 0,
-      isAdmin: ""
-    };
+    const data: Users = { ...dto };
  
     return this.prisma.user.create({ data });
   }
 
   update(id: string, dto: UpdateUsersDto): Promise<Users> {
-    const data: Partial<Users> = { 
-      ...dto,
-      name: "",
-      email: "",
-      password: "",
-      cpf: 0,
-      isAdmin: ""
-     };
+    const data: Partial<Users> = { ...dto };
 
     return this.prisma.user.update({
       where: { id },

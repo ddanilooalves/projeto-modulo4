@@ -35,7 +35,6 @@ export class UsersController {
     return this.usersService.create(dto);
   }
 
-  @Get()
   @Patch(':id')
   @ApiOperation({
     summary: 'Editar um usuário pelo ID',
@@ -43,4 +42,5 @@ export class UsersController {
   update(@Param('id') id: string, @Body() dto: UpdateUsersDto): Promise<Users> {
     return this.usersService.update(id, dto);
   }
+  
 }
