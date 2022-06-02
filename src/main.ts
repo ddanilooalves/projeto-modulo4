@@ -9,9 +9,12 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
-    .setTitle('PacMen')
-    .setDescription('Aplicação para gestão dos usuários cadastrados')
+    .setTitle('X Box')
+    .setDescription('Aplicação para gestão da plataforma de jogos')
     .setVersion('1.0.0')
+    .addTag('status')
+    .addTag('user')
+    .addTag('games')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
