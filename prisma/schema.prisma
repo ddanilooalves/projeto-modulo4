@@ -16,11 +16,27 @@ model User {
   name String
   email String
   password String
-  cpf Int
+  cpf Float
   isAdmin String
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("user")
+}
+
+model Games {
+  id String @id @default(uuid())
+  name String @unique
+  coverImageUrl String
+  description String
+  year Float
+  imdbScore Int
+  trailerYouTubeUrl String
+  gameplayYouTubeUrl String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("games")
 }

@@ -1,5 +1,5 @@
 export class Games {
-    title: String;
+    name: String;
     coverImageURL: String;
     description: String;
     year: String;
