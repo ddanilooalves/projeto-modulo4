@@ -12,12 +12,16 @@ export class UsersService {
     return this.prisma.user.findMany();
   }
 
-  async findOne(id: string): Promise<Users> {
+  async findById(id: string): Promise<Users> {
     const record = await this.prisma.user.findUnique({ where: { id } });
     if (!record) {
       throw new NotFoundException(`Usuário com ID ${id} não localizado!`)
     }
     return record
+  }
+
+  findOne(id: string): Promise<Users> {
+    return this.findById(id);
   }
 
   create(dto: CreateUsersDto): Promise<Users> {
@@ -26,7 +30,8 @@ export class UsersService {
     return this.prisma.user.create({ data });
   }
 
-  update(id: string, dto: UpdateUsersDto): Promise<Users> {
+  async update(id: string, dto: UpdateUsersDto): Promise<Users> {
+    await this.findById(id);
     const data: Partial<Users> = { ...dto };
 
     return this.prisma.user.update({
