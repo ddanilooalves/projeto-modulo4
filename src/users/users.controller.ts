@@ -5,16 +5,23 @@ import { UsersService } from './users.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UpdateUsersDto } from './dto/update-table.dto';
 
-@ApiTags('Users')
+@ApiTags('users')
 @Controller()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Post('create')
+  @ApiOperation({
+    summary: 'Criar um usuário',
+  })
+  create(@Body() dto: CreateUsersDto): Promise<Users> {
+    return this.usersService.create(dto);
+  }
+
   @Get()
   @ApiOperation({
     summary: 'Listar todos os usuários',
-  })  
-
+  }) 
   findAll(): Promise<Users[]> {
     return this.usersService.findAll();
   }
@@ -25,14 +32,6 @@ export class UsersController {
   })
   findOne(@Param('id') id: string): Promise<Users> {
     return this.usersService.findOne(id);
-  }
-
-  @Post('create')
-  @ApiOperation({
-    summary: 'Criar um usuário',
-  })
-  create(@Body() dto: CreateUsersDto): Promise<Users> {
-    return this.usersService.create(dto);
   }
 
   @Patch(':id')

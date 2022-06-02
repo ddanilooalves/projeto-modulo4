@@ -26,7 +26,6 @@ export class UsersService {
 
   create(dto: CreateUsersDto): Promise<Users> {
     const data: Users = { ...dto };
- 
     return this.prisma.user.create({ data }).catch(this.handleError);
   }
 

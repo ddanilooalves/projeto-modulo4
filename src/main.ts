@@ -13,7 +13,7 @@ async function bootstrap() {
     .setDescription('Aplicação para gestão da plataforma de jogos')
     .setVersion('1.0.0')
     .addTag('status')
-    .addTag('user')
+    .addTag('users')
     .addTag('games')
     .build();
 
