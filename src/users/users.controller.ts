@@ -3,7 +3,7 @@ import { CreateUsersDto } from './dto/create-users.dto';
 import { Users } from './entities/users.entity';
 import { UsersService } from './users.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { UpdateUsersDto } from './dto/update-table.dto';
+import { UpdateUsersDto } from './dto/update-users.dto';
 
 @ApiTags('users')
 @Controller()
