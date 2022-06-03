@@ -12,5 +12,5 @@ export class CreateProfileDto {
     @ApiProperty({description: 'Inserir URL da imagem do perfil',
     example: "..."
     })
-    imageUrl: String;
+    imageUrl: string;
 }
