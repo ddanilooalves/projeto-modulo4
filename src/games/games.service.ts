@@ -13,20 +13,24 @@ export class GamesService {
   }
 
   async findById(id: string): Promise<Games> {
-    const record = await this.prisma.games.findUnique({ where: { id } });
-    if (!record) {
-      throw new NotFoundException(`Usuário com ID ${id} não localizado!`)
+    const records = await this.prisma.games.findUnique({ where: { id } });
+    if (!records) {
+      throw new NotFoundException(`Jogo com ID ${id} não localizado!`)
     }
-    return record
+    return records;
   }
 
   findOne(id: string): Promise<Games> {
     return this.findById(id);
   }
 
-  create(dto: CreateGamesDto): Promise<Games> {
+  async create(dto: CreateGamesDto): Promise<Games> {
     const data: Games = { ...dto };
-    return this.prisma.games.create({ data }).catch(this.handleError);
+    try {
+      return await this.prisma.games.create({ data });
+    } catch (err) {
+      return this.handleError(err);
+    }
   }
 
   async update(id: string, dto: UpdateGamesDto): Promise<Games> {
@@ -35,7 +39,7 @@ export class GamesService {
 
     return this.prisma.games.update({
       where: { id },
-      data,
+      data
     }).catch(this.handleError);
   }
 

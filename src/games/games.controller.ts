@@ -3,6 +3,7 @@ import { GamesService } from './games.service';
 import { CreateGamesDto } from './dto/create-games.dto';
 import { UpdateGamesDto } from './dto/update-games.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Games } from './entities/games.entity';
 
 @ApiTags('games')
 @Controller('games')
@@ -13,15 +14,15 @@ export class GamesController {
   @ApiOperation({
     summary: 'Criar um jogo'
   })
-  create(@Body() createGameDto: CreateGamesDto) {
-    return this.gamesService.create(createGameDto);
+  create(@Body() createGamesDto: CreateGamesDto): Promise<Games> {
+    return this.gamesService.create(createGamesDto);
   }
 
   @Get()
   @ApiOperation({
     summary: 'Listar todos os jogos'
   })
-  findAll() {
+  findAll(): Promise<Games[]> {
     return this.gamesService.findAll();
   }
 
@@ -29,7 +30,7 @@ export class GamesController {
   @ApiOperation({
     summary: 'Visualizar jogo pelo ID'
   })
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Promise<Games> {
     return this.gamesService.findOne(id);
   }
 
@@ -37,8 +38,8 @@ export class GamesController {
   @ApiOperation({
     summary: 'Editar jogo pelo ID'
   })
-  update(@Param('id') id: string, @Body() updateGameDto: UpdateGamesDto) {
-    return this.gamesService.update(id, updateGameDto);
+  update(@Param('id') id: string, @Body() updateGamesDto: UpdateGamesDto): Promise<Games> {
+    return this.gamesService.update(id, updateGamesDto);
   }
 
   @Delete(':id')
