@@ -49,5 +49,33 @@ model Games {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  relations Relation[]
+
   @@map("games")
+}
+
+model Genders {
+  id String @id @default(uuid())
+  name String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  relations Relation[]
+
+  @@map("gender")
+}
+
+model Relation {
+  id String @id @default(uuid())
+
+  gender Genders @relation(fields: [genderId], references: [id])
+  genderId String
+
+  games Games[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("relation")
 }
