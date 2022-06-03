@@ -7,14 +7,29 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
+  private usersSelect = {
+    id: true,
+    number: true,
+    name: true,
+    email: true,
+    password: false,
+    cpf: true,
+    isAdmin: true
+  };
+
   constructor(private readonly prisma: PrismaService) {}
 
   findAll(): Promise<Users[]> {
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany({
+      select: this.usersSelect,
+    });
   }
 
   async findById(id: string): Promise<Users> {
-    const record = await this.prisma.user.findUnique({ where: { id } });
+    const record = await this.prisma.user.findUnique({ 
+      where: { id },
+      select: this.usersSelect,
+     });
     if (!record) {
       throw new NotFoundException(`Usuário com ID ${id} não localizado!`)
     }
@@ -30,16 +45,24 @@ export class UsersService {
       ...dto,
       password: await bcrypt.hash(dto.password, 10),
      };
-    return this.prisma.user.create({ data }).catch(this.handleError);
+    return this.prisma.user.create({ 
+      data, 
+      select: this.usersSelect 
+    }).catch(this.handleError);
   }
 
   async update(id: string, dto: UpdateUsersDto): Promise<Users> {
     await this.findById(id);
     const data: Partial<Users> = { ...dto };
 
+    if (data.password) {
+      data.password = await bcrypt.hash(data.password, 10);
+    }
+
     return this.prisma.user.update({
       where: { id },
       data,
+      select: this.usersSelect
     }).catch(this.handleError);
   }
 
