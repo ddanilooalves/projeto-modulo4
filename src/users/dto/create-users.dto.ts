@@ -1,4 +1,4 @@
-import { IsNumber, IsPositive, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsPositive, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUsersDto {
@@ -39,10 +39,10 @@ export class CreateUsersDto {
   })
   cpf: number;
 
-  @IsString()
+  @IsBoolean()
   @ApiProperty({
-    description: 'Insira o nome de usuário administrador',
-    example: "XunimDelirium22"
+    description: 'Informar se o usuário é administrador',
+    example: true || false
   })
-  isAdmin: string
+  isAdmin: boolean
 }

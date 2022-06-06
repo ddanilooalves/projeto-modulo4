@@ -34,7 +34,7 @@ export class UsersService {
     if (!record) {
       throw new NotFoundException(`Usuário com ID ${id} não localizado!`)
     }
-    return record
+    return record;
   }
 
   findOne(id: string): Promise<Users> {

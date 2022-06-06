@@ -12,7 +12,7 @@ export class RelationService {
     const data: Prisma.RelationCreateInput = {
       gender: {
         connect: {
-          id: createRelationDto.gendersId,
+          id: createRelationDto.gendersId, 
         },
       },
       games: {
