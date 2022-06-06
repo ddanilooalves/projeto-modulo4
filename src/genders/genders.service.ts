@@ -9,11 +9,11 @@ export class GendersService {
   constructor(private readonly prisma: PrismaService) {}
 
   findAll(): Promise<Gender[]> {
-    return this.prisma.genders.findMany();
+    return this.prisma.gender.findMany();
   }
 
   async findById(id: string): Promise<Gender> {
-    const records = await this.prisma.genders.findUnique({ where: { id } });
+    const records = await this.prisma.gender.findUnique({ where: { id } });
     if (!records) {
       throw new NotFoundException(`Perfil com ID ${id} não localizado!`)
     }
@@ -27,7 +27,7 @@ export class GendersService {
   async create(dto: CreateGenderDto): Promise<Gender> {
     const data: Gender = { ...dto };
     try {
-      return await this.prisma.genders.create({ data });
+      return await this.prisma.gender.create({ data });
     } catch (err) {
       return this.handleError(err);
     }
@@ -37,7 +37,7 @@ export class GendersService {
     await this.findById(id);
     const data: Partial<Gender> = { ...dto };
 
-    return this.prisma.genders.update({
+    return this.prisma.gender.update({
       where: { id },
       data
     }).catch(this.handleError);
@@ -45,7 +45,7 @@ export class GendersService {
 
   async delete(id: string) {
     await this.findById(id);
-    await this.prisma.genders.delete({ where: { id }});
+    await this.prisma.gender.delete({ where: { id }});
   }
 
   handleError(err: Error): undefined {

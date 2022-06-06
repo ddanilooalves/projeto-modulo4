@@ -69,8 +69,8 @@ model Gender {
 model Relation {
   id String @id @default(uuid())
 
-  gender Gender @relation(fields: [genderId], references: [id])
-  genderId String
+  gender Gender @relation(fields: [gendersId], references: [id])
+  gendersId String
 
   games Games[]
 
