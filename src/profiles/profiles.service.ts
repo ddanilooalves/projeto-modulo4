@@ -1,5 +1,6 @@
-import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma/prisma.service';
+import { handleError } from 'src/utility/handle-error.utility';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { Profile } from './entities/profile.entity';
@@ -29,7 +30,7 @@ export class ProfilesService {
     try {
       return await this.prisma.profile.create({ data });
     } catch (err) {
-      return this.handleError(err);
+      return handleError(err);
     }
   }
 
@@ -40,15 +41,11 @@ export class ProfilesService {
     return this.prisma.profile.update({
       where: { id },
       data
-    }).catch(this.handleError);
+    }).catch(handleError);
   }
 
   async delete(id: string) {
     await this.findById(id);
     await this.prisma.profile.delete({ where: { id }});
-  }
-
-  handleError(err: Error): undefined {
-    throw new UnprocessableEntityException(err.message)
   }
 }

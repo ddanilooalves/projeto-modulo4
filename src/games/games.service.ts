@@ -1,5 +1,6 @@
-import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma/prisma.service';
+import { handleError } from 'src/utility/handle-error.utility';
 import { CreateGamesDto } from './dto/create-games.dto';
 import { UpdateGamesDto } from './dto/update-games.dto';
 import { Games } from './entities/games.entity';
@@ -29,7 +30,7 @@ export class GamesService {
     try {
       return await this.prisma.games.create({ data });
     } catch (err) {
-      return this.handleError(err);
+      return handleError(err);
     }
   }
 
@@ -40,15 +41,11 @@ export class GamesService {
     return this.prisma.games.update({
       where: { id },
       data
-    }).catch(this.handleError);
+    }).catch(handleError);
   }
 
   async delete(id: string) {
     await this.findById(id);
     await this.prisma.games.delete({ where: { id }});
-  }
-
-  handleError(err: Error): undefined {
-    throw new UnprocessableEntityException(err.message)
   }
 }
