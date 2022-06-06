@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma/prisma.service';
+import { handleError } from 'src/utility/handle-error.utility';
 import { CreateRelationDto } from './dto/create-relation.dto';
 
 @Injectable()
@@ -7,7 +9,29 @@ export class RelationService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(createRelationDto: CreateRelationDto) {
-    return 'This action adds a new relation';
+    const data: Prisma.RelationCreateInput = {
+      gender: {
+        connect: {
+          id: createRelationDto.gendersId,
+        },
+      },
+      games: {
+        connect: createRelationDto.games.map(gameId => ({
+          id: gameId,
+        })),
+      }
+    };
+    return  this.prisma.relation.create({ 
+      data,
+      select: {
+        id: true,
+        games: {
+          select: {
+            name: true
+          }
+        }
+      }
+     }).catch(handleError);
   }
 
   findAll() {

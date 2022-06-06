@@ -1,9 +1,9 @@
-import { Gender } from "src/genders/entities/gender.entity";
+import { Games } from "@prisma/client";
 
 export class Relation {
   id?: string;
   gendersId: string;
   createdAt?: Date;
   updatedAt?: Date;
-  gender: Gender[]
+  games?: Games[]
 }

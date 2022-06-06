@@ -70,7 +70,7 @@ model Relation {
   id String @id @default(uuid())
 
   gender Gender @relation(fields: [gendersId], references: [id])
-  gendersId String
+  gendersId String @map("gender_id")
 
   games Games[]
 
