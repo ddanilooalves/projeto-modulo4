@@ -1,34 +1,53 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { GendersService } from './genders.service';
 import { CreateGenderDto } from './dto/create-gender.dto';
 import { UpdateGenderDto } from './dto/update-gender.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Gender } from './entities/gender.entity';
 
+@ApiTags('genders')
 @Controller('genders')
 export class GendersController {
-  constructor(private readonly gendersService: GendersService) {}
+  constructor(private readonly genderService: GendersService) {}
 
   @Post()
-  create(@Body() createGenderDto: CreateGenderDto) {
-    return this.gendersService.create(createGenderDto);
+  @ApiOperation({
+    summary: 'Criar um genêro'
+  })
+  create(@Body() createGenderDto: CreateGenderDto): Promise<Gender> {
+    return this.genderService.create(createGenderDto);
   }
 
   @Get()
-  findAll() {
-    return this.gendersService.findAll();
+  @ApiOperation({
+    summary: 'Listar todos os genêros'
+  })
+  findAll(): Promise<Gender[]> {
+    return this.genderService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.gendersService.findOne(+id);
+  @ApiOperation({
+    summary: 'Visualizar genêro pelo ID'
+  })
+  findOne(@Param('id') id: string): Promise<Gender> {
+    return this.genderService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGenderDto: UpdateGenderDto) {
-    return this.gendersService.update(+id, updateGenderDto);
+  @ApiOperation({
+    summary: 'Editar genêro pelo ID'
+  })
+  update(@Param('id') id: string, @Body() updateGenderDto: UpdateGenderDto): Promise<Gender> {
+    return this.genderService.update(id, updateGenderDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.gendersService.remove(+id);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({
+    summary: 'Deletar genêro pelo ID'
+  })
+  delete(@Param('id') id: string) {
+    this.genderService.delete(id);
   }
 }

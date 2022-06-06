@@ -54,7 +54,7 @@ model Games {
   @@map("games")
 }
 
-model Genders {
+model Gender {
   id String @id @default(uuid())
   name String
 
@@ -69,7 +69,7 @@ model Genders {
 model Relation {
   id String @id @default(uuid())
 
-  gender Genders @relation(fields: [genderId], references: [id])
+  gender Gender @relation(fields: [genderId], references: [id])
   genderId String
 
   games Games[]
