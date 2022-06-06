@@ -35,10 +35,32 @@ export class RelationService {
   }
 
   findAll() {
-    return `This action returns all relation`;
+    return this.prisma.relation.findMany({
+      select: {
+        id: true,
+        games: true,
+        gender: true
+      }
+    });
   }
 
   findOne(id: string) {
-    return `This action returns a #${id} relation`;
+    return this.prisma.relation.findUnique({
+      where: { id },
+      include: {
+        gender: {
+          select: {
+            name: true,
+          },
+        },
+        games: {
+          select: {
+            id: true,
+            name: true,
+            coverImageUrl: true
+          },
+        },
+      }
+    });
   }
 }
