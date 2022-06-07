@@ -12,14 +12,19 @@ export class RelationService {
     const data: Prisma.RelationCreateInput = {
       gender: {
         connect: {
-          id: createRelationDto.gendersId, 
+          id: createRelationDto.gendersId,
         },
+      },
+      profile: {
+        connect: {
+          id: createRelationDto.profileId
+        }
       },
       games: {
         connect: createRelationDto.games.map(gameId => ({
           id: gameId,
         })),
-      }
+      },
     };
     return  this.prisma.relation.create({ 
       data,

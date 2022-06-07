@@ -9,6 +9,13 @@ export class CreateRelationDto {
     })
     gendersId: string;
 
+    @IsUUID()
+    @ApiProperty({
+      description: 'ID do perfil criado',
+      example: 'cc29d461-acbd-4a6f-b8ec-f641073f4fd6'
+    })
+    profileId: string;
+
     @IsUUID(undefined, { each: true })
     @ApiProperty({
         description: 'Lista de ID´s dos jogos nos genêros',

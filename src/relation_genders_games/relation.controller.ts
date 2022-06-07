@@ -10,7 +10,7 @@ export class RelationController {
 
   @Post()
   @ApiOperation({
-    summary: 'Criar um relações de jogos com genêros'
+    summary: 'Criar relações'
   })
   create(@Body() createRelationDto: CreateRelationDto) {
     return this.relationService.create(createRelationDto);

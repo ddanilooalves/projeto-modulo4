@@ -70,14 +70,12 @@ model Gender {
 
 model Relation {
   id String @id @default(uuid())
-  favorite Boolean
 
   gender Gender @relation(fields: [gendersId], references: [id])
   gendersId String @map("gender_id")
 
   profile Profile @relation(fields: [profileId], references: [id])
   profileId String @map("profile_id")
-
 
   games Games[]
 
