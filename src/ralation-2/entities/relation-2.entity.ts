@@ -1,6 +1,6 @@
 import { Games } from "@prisma/client";
 
-export class Relation {
+export class Relation2 {
   id?: string;
   gendersId: string;
   profileId: string;

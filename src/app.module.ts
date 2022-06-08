@@ -7,7 +7,7 @@ import { PrismaService } from '../prisma/prisma/prisma.service';
 import { GamesModule } from './games/games.module';
 import { ProfilesModule } from './profiles/profiles.module';
 import { GendersModule } from './genders/genders.module';
-import { RelationModule } from './relations/relation.module';
+import { RelationModule } from './relation-1/relation.module';
 
 @Module({
   imports: [UsersModule, PrismaModule, GamesModule, ProfilesModule, GendersModule, RelationModule],
