@@ -3,17 +3,22 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma/prisma.service';
 import { handleError } from 'src/utility/handle-error.utility';
 import { CreateRelationDto } from './dto/create-relation.dto';
-import { CreateProfileGamesDto } from './dto/create-profilegames-dto'
+import { CreateProfileGamesDto } from '../relations/dto/create-relation.dto'
 
 @Injectable()
 export class RelationService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createRelationDto: CreateRelationDto) {
+  async create(createRelationDto: CreateRelationDto) {
     const data: Prisma.RelationCreateInput = {
       gender: {
         connect: {
           id: createRelationDto.gendersId,
+        },
+      },
+      profile: {
+        connect: {
+          id: createRelationDto.profileId,
         },
       },
       games: {
@@ -21,33 +26,23 @@ export class RelationService {
           id: gameId,
         })),
       },
-      favorite: false,
-      profile: {
-        create: undefined,
-        connectOrCreate: {
-          where: {
-            id: '',
-            name: ''
-          },
-          create: undefined
-        },
-        connect: {
-          id: '',
-          name: ''
-        }
-      }
     };
-    return  this.prisma.relation.create({ 
-      data,
-      select: {
-        id: true,
-        games: {
-          select: {
-            name: true
-          }
+    try {
+      return await this.prisma.relation.create({
+        data,
+        select: {
+          id: true,
+          games: {
+            select: {
+              name: true
+            }
+          },
+          favorite: true
         }
-      }
-     }).catch(handleError);
+      });
+    } catch (err) {
+      return handleError(err);
+    }
   }
 
   findAll() {
@@ -55,7 +50,8 @@ export class RelationService {
       select: {
         id: true,
         games: true,
-        gender: true
+        gender: true,
+        favorite: true
       }
     });
   }
@@ -87,12 +83,17 @@ export class RelationProfileGamesService {
 
   create(createProfileGamesDto: CreateProfileGamesDto) {
     const data: Prisma.RelationCreateInput = {
+      gender: {
+        connect: {
+          id: createProfileGamesDto.gendersId,
+        },
+      },
       profile: {
         connect: {
           id: createProfileGamesDto.profileId
         }
       },
-      favorite: createProfileGamesDto.favorite
+      favorite: createProfileGamesDto.favorite,
       games: {
         connect: createProfileGamesDto.games.map(gameId => ({
           id: gameId,

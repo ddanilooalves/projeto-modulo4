@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
-import { RelationService } from './relation.service';
+import { RelationProfileGamesService, RelationService } from './relation.service';
 import { CreateRelationDto } from './dto/create-relation.dto';
-import { CreateProfileGamesDto } from './dto/create-profilegames-dto'
+import { CreateProfileGamesDto } from '../relations/dto/create-relation.dto'
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('relation')
@@ -32,17 +32,18 @@ export class RelationController {
   findOne(@Param('id') id: string) {
     return this.relationService.findOne(id);
   }
-}
+};
 
-@Controller('relation')
+@ApiTags('relation-profile-game')
+@Controller('favorite')
 export class RelationProfileGamesController {
-  constructor(private readonly relationService: RelationService) {}
+  constructor(private readonly relationsService: RelationProfileGamesService) {}
 
-  @Put()
+  @Post()
   @ApiOperation({
     summary: 'Jogos salvos no perfil'
   })
   create(@Body() createProfileGamesDto: CreateProfileGamesDto) {
-    return this.relationService.create(createProfileGamesDto);
+    return this.relationsService.create(createProfileGamesDto);
   }
-}
+};

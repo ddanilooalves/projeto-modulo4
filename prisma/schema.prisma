@@ -68,28 +68,15 @@ model Gender {
   @@map("gender")
 }
 
-model Favorite {
-  id String @id @default(uuid())
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  relations Relation[]
-
-  @@map("favorite")
-}
-
 model Relation {
   id String @id @default(uuid())
+  favorite Boolean
 
   gender Gender @relation(fields: [gendersId], references: [id])
   gendersId String @map("gender_id")
 
   profile Profile @relation(fields: [profileId], references: [id])
   profileId String @map("profile_id")
-
-  favorite Favorite @relation(fields: [favorites], references: [id])
-  favorites String
 
   games Games[]
 
@@ -98,4 +85,3 @@ model Relation {
 
   @@map("relation")
 }
-
