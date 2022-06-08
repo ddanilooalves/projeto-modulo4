@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { CreateRelationDto } from './dto/create-relation.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { RelationService } from './relation.service';
 
 @ApiTags('relation')
 @Controller('relation')
