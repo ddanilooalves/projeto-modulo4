@@ -26,6 +26,7 @@ export class RelationService {
           id: gameId,
         })),
       },
+      favorite: createRelationDto.favorite,
     };
     try {
       return await this.prisma.relation.create({

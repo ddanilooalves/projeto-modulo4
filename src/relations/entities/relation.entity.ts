@@ -4,7 +4,7 @@ export class Relation {
   id?: string;
   gendersId: string;
   profileId: string;
-  favorite?: boolean;
+  favorite?: Boolean;
   createdAt?: Date;
   updatedAt?: Date;
   games?: Games[]

@@ -16,6 +16,12 @@ export class CreateRelationDto {
     })
     profileId: string;
 
+    @IsBoolean()
+    @ApiProperty({description: 'Favoritar jogo',
+    example: true || false
+    })
+    favorite: boolean;
+
     @IsUUID(undefined, { each: true })
     @ApiProperty({
         description: 'Lista de ID´s dos jogos nos genêros',
@@ -47,9 +53,9 @@ export class CreateProfileGamesDto {
   
   @IsUUID(undefined, { each: true })
   @ApiProperty({
-      description: 'Lista de ID´s dos jogos',
-      example: '["b8e6002e-6d86-46a5-aa54-9d2c2696b56f", "20e9aba2-3dd1-4132-92ce-5809bb5e6fa2"]'
-    })
-    games: string[];
+  description: 'Lista de ID´s dos jogos',
+  example: '["b8e6002e-6d86-46a5-aa54-9d2c2696b56f", "20e9aba2-3dd1-4132-92ce-5809bb5e6fa2"]'
+  })
+  games: string[];
 };
 
