@@ -3,7 +3,7 @@ import { CreateRelationDto } from './dto/create-relation.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RelationService } from './relation.service';
 
-@ApiTags('relation')
+@ApiTags('relation-genders-games')
 @Controller('relation')
 export class RelationController {
   constructor(private readonly relationService: RelationService) {}
@@ -18,7 +18,7 @@ export class RelationController {
 
   @Get()
   @ApiOperation({
-    summary: 'Listar todas as relações'
+    summary: 'Listar jogos em seus respectivos genêros'
   })
   findAll() {
     return this.relationService.findAll();
@@ -26,7 +26,7 @@ export class RelationController {
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Visualizar relações por ID'
+    summary: 'Visualizar jogos em seus respectivos genêros por ID'
   })
   findOne(@Param('id') id: string) {
     return this.relationService.findOne(id);

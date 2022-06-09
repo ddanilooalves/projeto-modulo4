@@ -44,4 +44,34 @@ export class RelationProfileGamesService {
       return handleError(err);
     }
   }
+  
+  findAll() {
+    return this.prisma.relation2.findMany({
+      select: {
+        id: true,
+        game: true,
+        gender: true,
+      }
+    });
+  }
+
+  findOne(id: string) {
+    return this.prisma.relation2.findUnique({
+      where: { id },
+      include: {
+        gender: {
+          select: {
+            name: true,
+          },
+        },
+        game: {
+          select: {
+            id: true,
+            name: true,
+            coverImageUrl: true
+          },
+        },
+      }
+    });
+  }
 }
