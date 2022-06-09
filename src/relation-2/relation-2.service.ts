@@ -22,7 +22,7 @@ export class RelationProfileGamesService {
       },
       favorite: createProfileGamesDto.favorite,
       games: {
-        connect: createProfileGamesDto.games.map(gameId => ({
+        connect: createProfileGamesDto.game.map(gameId => ({
           id: gameId,
         })),
       },

@@ -1,4 +1,4 @@
-import { Games } from "@prisma/client";
+import { Games } from "src/games/entities/games.entity";
 
 export class Relation {
   id?: string;
@@ -6,5 +6,5 @@ export class Relation {
   profileId: string;
   createdAt?: Date;
   updatedAt?: Date;
-  games?: Games[]
+  gamers: Games[]
 }

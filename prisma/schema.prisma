@@ -53,7 +53,7 @@ model Games {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  relations Relation[]
+  relation Relation[]
 
   relation2 Relation2[]
 
@@ -67,7 +67,7 @@ model Gender {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  relations Relation[]
+  relation Relation[]
 
   relation2 Relation2[]
 
@@ -83,7 +83,7 @@ model Relation {
   profile Profile @relation(fields: [profileId], references: [id])
   profileId String @map("profile_id")
 
-  games Games[]
+  gamers Games[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -101,7 +101,7 @@ model Relation2 {
   profile Profile @relation(fields: [profileId], references: [id])
   profileId String @map("profiles_id")
 
-  games Games[]
+  game Games[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

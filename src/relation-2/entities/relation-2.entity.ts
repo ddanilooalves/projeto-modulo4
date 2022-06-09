@@ -7,5 +7,5 @@ export class Relation2 {
   favorite: Boolean;
   createdAt?: Date;
   updatedAt?: Date;
-  games?: Games[]
+  game?: Games[]
 }
