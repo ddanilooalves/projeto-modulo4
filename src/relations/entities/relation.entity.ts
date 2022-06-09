@@ -6,5 +6,5 @@ export class Relation {
   profileId: string;
   createdAt?: Date;
   updatedAt?: Date;
-  gamers: Games[]
+  games: Games[]
 }

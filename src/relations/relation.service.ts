@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { profile } from 'console';
 import { PrismaService } from 'prisma/prisma/prisma.service';
 import { handleError } from 'src/utility/handle-error.utility';
 import { CreateRelationDto } from './dto/create-relation.dto';
@@ -21,8 +20,8 @@ export class RelationService {
           id: createRelationDto.profileId,
         },
       },
-      games: {
-        connect: createRelationDto.gamers.map(gameId => ({
+      gamers: {
+        connect: createRelationDto.games.map(gameId => ({
           id: gameId,
         })),
       },
@@ -31,7 +30,7 @@ export class RelationService {
         data,
           select: {
           id: true,
-          games: {
+          gamers: {
             select: {
               name: true,
             },
@@ -44,7 +43,7 @@ export class RelationService {
     return this.prisma.relation.findMany({
       select: {
         id: true,
-        games: true,
+        gamers: true,
         gender: true,
       }
     });
@@ -59,7 +58,7 @@ export class RelationService {
             name: true,
           },
         },
-        games: {
+        gamers: {
           select: {
             id: true,
             name: true,

@@ -27,5 +27,5 @@ export class CreateProfileGamesDto {
     description: 'Lista de ID´s dos jogos',
     example: '["b8e6002e-6d86-46a5-aa54-9d2c2696b56f", "20e9aba2-3dd1-4132-92ce-5809bb5e6fa2"]'
     })
-    game: string[];
+    games: string[];
   };

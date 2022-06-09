@@ -1,5 +1,4 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Games } from "@prisma/client";
 import { IsUUID } from "class-validator";
 
 export class CreateRelationDto {
@@ -22,5 +21,5 @@ export class CreateRelationDto {
         description: 'Lista de ID´s dos jogos nos genêros',
         example: '["b8e6002e-6d86-46a5-aa54-9d2c2696b56f", "20e9aba2-3dd1-4132-92ce-5809bb5e6fa2"]'
       })
-      gamers: string[];
+      games: string[];
 };
