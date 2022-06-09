@@ -8,19 +8,19 @@ export class HomepageService {
   async findByGender(id: string) {
     const favorite = await this.prisma.relation2.findUnique({
       where: {
-        id
+        id,
       },
       select: {
-        game: true
-      }
-    })
+        game: true,
+      },
+    });
 
     const genders = await this.prisma.relation.findMany({
       select: {
         id: true,
         gamers: true,
-      }
-    })
-    return [{favorite}, {genders}]
+      },
+    });
+    return [{ favorite }, { genders }];
   }
 }
