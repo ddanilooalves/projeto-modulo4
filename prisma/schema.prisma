@@ -88,7 +88,7 @@ model Relation {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("relations")
+  @@map("relation")
 }
 
 model Relation2 {
