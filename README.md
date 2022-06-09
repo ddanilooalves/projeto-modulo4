@@ -41,7 +41,7 @@ Enquanto o usuário normal, pode adicionar jogos ao seu perfil, e favoritar os m
 
 >
 > Este projeto visa a funcionalidade de ser: 
-> - Uma plataforma de jogos, onde podemos adicionar jogos ao nosso perfil, e favoritad-los para jogarmos depois;
+> - Uma plataforma de jogos, onde podemos adicionar jogos ao nosso perfil, e favorita-los para jogarmos depois;
 
 
 ## Testes
@@ -61,7 +61,7 @@ Dentre outros...
 
 ## Autores
 
-> - **Danilo Alves de Aguiar** - Idealizador e Escritor da Documentação - [Github](https://github.com/ddanilooalves) | [Site](http://lucasanderson.com.br/)
+> - **Danilo Alves de Aguiar** - Idealizador e Escritor da Documentação - [Github](https://github.com/ddanilooalves)
 
 ## Agradecimentos 
 > 
