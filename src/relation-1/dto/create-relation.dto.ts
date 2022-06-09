@@ -23,6 +23,3 @@ export class CreateRelationDto {
       })
       games: string[];
 };
-
-
-

@@ -2,14 +2,14 @@ import { Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { PrismaService } from "prisma/prisma/prisma.service";
 import { handleError } from "src/utility/handle-error.utility";
-import { CreateProfileGamesDto } from "./dto/create-relation-1.dto";
+import { CreateProfileGamesDto } from "./dto/create-relation-2.dto";
 
 @Injectable()
 export class RelationProfileGamesService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(createProfileGamesDto: CreateProfileGamesDto) {
-    const data: Prisma.RelationCreateInput = {
+    const data: Prisma.Relation2CreateInput = {
       gender: {
         connect: {
           id: createProfileGamesDto.gendersId,
@@ -28,7 +28,7 @@ export class RelationProfileGamesService {
       },
     };
     try {
-      return this.prisma.relation.create({
+      return this.prisma.relation2.create({
         data,
         select: {
           id: true,
@@ -36,7 +36,8 @@ export class RelationProfileGamesService {
             select: {
               name: true
             }
-          }
+          },
+          favorite: true
         }
       });
     } catch (err) {

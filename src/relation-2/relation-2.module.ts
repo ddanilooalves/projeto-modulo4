@@ -8,4 +8,4 @@ import { PrismaModule } from 'prisma/prisma/prisma.module';
   controllers: [RelationProfileGamesController],
   providers: [RelationProfileGamesService]
 })
-export class RelationModule {}
+export class Relation2Module {}

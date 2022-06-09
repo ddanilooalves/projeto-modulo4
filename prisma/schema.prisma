@@ -33,6 +33,8 @@ model Profile {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  relations Relation[]
+
   relation2 Relation2[]
 
   @@map("profile")
@@ -67,6 +69,8 @@ model Gender {
 
   relations Relation[]
 
+  relation2 Relation2[]
+
   @@map("gender")
 }
 
@@ -76,20 +80,26 @@ model Relation {
   gender Gender @relation(fields: [gendersId], references: [id])
   gendersId String @map("gender_id")
 
+  profile Profile @relation(fields: [profileId], references: [id])
+  profileId String @map("profile_id")
+
   games Games[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("relation")
+  @@map("relations")
 }
 
 model Relation2 {
   id String @id @default(uuid())
   favorite Boolean
 
+  gender Gender @relation(fields: [gendersId], references: [id])
+  gendersId String @map("genders_id")
+
   profile Profile @relation(fields: [profileId], references: [id])
-  profileId String @map("profile_id")
+  profileId String @map("profiles_id")
 
   games Games[]
 

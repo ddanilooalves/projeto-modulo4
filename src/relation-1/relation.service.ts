@@ -8,7 +8,7 @@ import { CreateRelationDto } from './dto/create-relation.dto';
 export class RelationService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createRelationDto: CreateRelationDto) {
+  create(createRelationDto: CreateRelationDto) {
     const data: Prisma.RelationCreateInput = {
       gender: {
         connect: {
@@ -27,17 +27,16 @@ export class RelationService {
       },
     };
     try {
-      return await this.prisma.relation.create({
+      return this.prisma.relation.create({
         data,
-        select: {
+          select: {
           id: true,
           games: {
             select: {
               name: true
-            }
+            },
           },
-          favorite: true
-        }
+        },
       });
     } catch (err) {
       return handleError(err);
@@ -50,7 +49,6 @@ export class RelationService {
         id: true,
         games: true,
         gender: true,
-        favorite: true
       }
     });
   }
