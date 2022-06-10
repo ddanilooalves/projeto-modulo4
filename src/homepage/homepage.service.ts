@@ -6,7 +6,7 @@ export class HomepageService {
   constructor(private readonly prisma: PrismaService) {}
 
   async findByGender(id: string) {
-    const favorite = await this.prisma.relation2.findUnique({
+    const profiles = await this.prisma.relation2.findUnique({
       where: {
         id,
       },
@@ -21,6 +21,6 @@ export class HomepageService {
         gamers: true,
       },
     });
-    return [{ favorite }, { genders }];
+    return [{ profiles }, { genders }];
   }
 }
