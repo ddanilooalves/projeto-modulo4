@@ -7,8 +7,8 @@ import { PrismaService } from '../prisma/prisma/prisma.service';
 import { GamesModule } from './games/games.module';
 import { ProfilesModule } from './profiles/profiles.module';
 import { GendersModule } from './genders/genders.module';
-import { RelationModule } from './relations/relation.module';
-import { Relation2Module } from './relation-2/relation-2.module';
+import { RelationModule } from './genders-games/relation.module';
+import { Relation2Module } from './profile-games/relation-2.module';
 import { HomepageModule } from './homepage/homepage.module';
 
 @Module({
