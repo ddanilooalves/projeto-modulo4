@@ -43,8 +43,16 @@ export class RelationService {
     return this.prisma.relation.findMany({
       select: {
         id: true,
-        gamers: true,
-        gender: true,
+        gamers: {
+          select: {
+            name: true,
+          },
+        },
+        gender: {
+          select: {
+            name: true,
+          },
+        },
       }
     });
   }

@@ -11,14 +11,33 @@ export class HomepageService {
         id,
       },
       select: {
-        game: true,
+        profile: {
+          select: {
+            name: true,
+          },
+        },
+        game: {
+          select: {
+            name: true,
+          }
+        },
+        favorite: true,
       },
     });
 
     const genders = await this.prisma.relation.findMany({
       select: {
         id: true,
-        gamers: true,
+        gender: {
+          select: {
+            name: true,
+          },
+        },
+        gamers: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
     return [{ profiles }, { genders }];
