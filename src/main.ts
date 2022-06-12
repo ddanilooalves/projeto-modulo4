@@ -13,6 +13,7 @@ async function bootstrap() {
     .setDescription('Aplicação para gestão da plataforma de jogos')
     .setVersion('1.0.0')
     .addTag('status')
+    .addTag('auth')
     .addTag('homepage')
     .addTag('users')
     .addTag('profiles')
@@ -20,6 +21,7 @@ async function bootstrap() {
     .addTag('genders')
     .addTag('relation-genders-games')
     .addTag('relation-profile-games')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
