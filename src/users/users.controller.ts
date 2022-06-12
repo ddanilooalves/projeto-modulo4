@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Param, Post, Patch, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Patch, Delete, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { CreateUsersDto } from './dto/create-users.dto';
 import { Users } from './entities/users.entity';
 import { UsersService } from './users.service';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UpdateUsersDto } from './dto/update-users.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('users')
 @Controller('users')
@@ -22,6 +23,8 @@ export class UsersController {
   @ApiOperation({
     summary: 'Listar todos os usuários',
   }) 
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   findAll(): Promise<Users[]> {
     return this.usersService.findAll();
   }
@@ -30,6 +33,8 @@ export class UsersController {
   @ApiOperation({
     summary: 'Visualizar um usuário',
   })
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   findOne(@Param('id') id: string): Promise<Users> {
     return this.usersService.findOne(id);
   }
@@ -38,6 +43,8 @@ export class UsersController {
   @ApiOperation({
     summary: 'Editar um usuário pelo ID',
   })
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   update(@Param('id') id: string, @Body() dto: UpdateUsersDto): Promise<Users> {
     return this.usersService.update(id, dto);
   }
@@ -47,6 +54,8 @@ export class UsersController {
   @ApiOperation({
     summary: 'Deletar usuário pelo ID'
   })
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   delete(@Param('id') id: string) {
     this.usersService.delete(id);
   }

@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { HomepageService } from './homepage.service';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('homepage')
+@UseGuards(AuthGuard())
+@ApiBearerAuth()
 @Controller('homepage')
 export class HomepageController {
   constructor(private readonly homepageService: HomepageService) {}
