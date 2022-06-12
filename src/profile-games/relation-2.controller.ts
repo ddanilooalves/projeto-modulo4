@@ -1,9 +1,12 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
+import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { CreateProfileGamesDto } from "./dto/create-relation-2.dto";
 import { RelationProfileGamesService } from "./relation-2.service";
 
 @ApiTags('relation-profile-games')
+@UseGuards(AuthGuard())
+@ApiBearerAuth()
 @Controller('favorite')
 export class RelationProfileGamesController {
   constructor(private readonly relation2Service: RelationProfileGamesService) {}

@@ -1,9 +1,12 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
 import { CreateRelationDto } from './dto/create-relation.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RelationService } from './relation.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('relation-genders-games')
+@UseGuards(AuthGuard())
+@ApiBearerAuth()
 @Controller('relation')
 export class RelationController {
   constructor(private readonly relationService: RelationService) {}
