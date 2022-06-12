@@ -14,7 +14,7 @@ model User {
   id String @id @default(uuid())
   number Int @unique
   name String
-  email String
+  email String @unique
   password String
   cpf Float
   isAdmin Boolean
