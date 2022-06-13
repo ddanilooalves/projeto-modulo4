@@ -7,8 +7,6 @@ import { Games } from './entities/games.entity';
 import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('games')
-@UseGuards(AuthGuard())
-@ApiBearerAuth()
 @Controller('games')
 export class GamesController {
   constructor(private readonly gamesService: GamesService) {}
@@ -17,6 +15,8 @@ export class GamesController {
   @ApiOperation({
     summary: 'Criar um jogo'
   })
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   create(@Body() createGamesDto: CreateGamesDto) {
     return this.gamesService.create(createGamesDto);
   }
@@ -41,6 +41,8 @@ export class GamesController {
   @ApiOperation({
     summary: 'Editar jogo pelo ID'
   })
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   update(@Param('id') id: string, @Body() updateGamesDto: UpdateGamesDto): Promise<Games> {
     return this.gamesService.update(id, updateGamesDto);
   }
@@ -50,6 +52,8 @@ export class GamesController {
   @ApiOperation({
     summary: 'Deletar jogo pelo ID'
   })
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   delete(@Param('id') id: string) {
     this.gamesService.delete(id);
   }
