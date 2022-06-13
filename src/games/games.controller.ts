@@ -17,7 +17,7 @@ export class GamesController {
   @ApiOperation({
     summary: 'Criar um jogo'
   })
-  create(@Body() createGamesDto: CreateGamesDto): Promise<Games> {
+  create(@Body() createGamesDto: CreateGamesDto) {
     return this.gamesService.create(createGamesDto);
   }
 

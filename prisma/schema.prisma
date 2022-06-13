@@ -22,6 +22,8 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  profiles Profile[]
+
   @@map("user")
 }
 
@@ -33,9 +35,10 @@ model Profile {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  relations Relation[]
+  user User @relation(fields: [userId], references: [id])
+  userId String @map("user_id")
 
-  relation2 Relation2[]
+  games Games[]
 
   @@map("profile")
 }
@@ -53,9 +56,8 @@ model Games {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  relation Relation[]
-
-  relation2 Relation2[]
+  gender Gender[]
+  profile Profile[]
 
   @@map("games")
 }
@@ -67,44 +69,7 @@ model Gender {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  relation Relation[]
-
-  relation2 Relation2[]
+  games Games[]
 
   @@map("gender")
-}
-
-model Relation {
-  id String @id @default(uuid())
-
-  gender Gender @relation(fields: [gendersId], references: [id])
-  gendersId String @map("gender_id")
-
-  profile Profile @relation(fields: [profileId], references: [id])
-  profileId String @map("profile_id")
-
-  gamers Games[]
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@map("relation")
-}
-
-model Relation2 {
-  id String @id @default(uuid())
-  favorite Boolean
-
-  gender Gender @relation(fields: [gendersId], references: [id])
-  gendersId String @map("genders_id")
-
-  profile Profile @relation(fields: [profileId], references: [id])
-  profileId String @map("profiles_id")
-
-  game Games[]
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@map("relation2")
 }

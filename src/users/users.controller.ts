@@ -57,6 +57,6 @@ export class UsersController {
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
   delete(@Param('id') id: string) {
-    this.usersService.delete(id);
+    return this.usersService.delete(id);
   }
 }

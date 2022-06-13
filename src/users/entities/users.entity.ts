@@ -7,5 +7,5 @@ export class Users {
     cpf: number;
     isAdmin: boolean;
     createdAt?: Date;
-    updatedAt?: Date
+    updatedAt?: Date;
   }

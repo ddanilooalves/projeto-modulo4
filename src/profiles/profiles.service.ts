@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma/prisma.service';
 import { handleError } from 'src/utility/handle-error.utility';
 import { CreateProfileDto } from './dto/create-profile.dto';
@@ -26,7 +27,20 @@ export class ProfilesService {
   }
 
   async create(dto: CreateProfileDto): Promise<Profile> {
-    const data: Profile = { ...dto };
+    const data: Prisma.ProfileCreateInput = {
+      name: dto.name,
+      imageUrl: dto.imageUrl,
+      user: {
+        connect: {
+          id: dto.userId,
+        },
+      },
+      games: {
+        connect: dto.games.map((gameId) => ({
+          id: gameId,
+        })),
+      },
+    };
     try {
       return await this.prisma.profile.create({ data });
     } catch (err) {
@@ -36,7 +50,19 @@ export class ProfilesService {
 
   async update(id: string, dto: UpdateProfileDto): Promise<Profile> {
     await this.findById(id);
-    const data: Partial<Profile> = { ...dto };
+    const data: Partial<Prisma.ProfileCreateInput> = {
+      user: {
+        connect: {
+          id: dto.userId,
+        },
+      },
+      ...dto,
+      games: {
+        connect: dto.games.map((gameId) => ({
+          id: gameId,
+        })),
+      },
+    };
 
     return this.prisma.profile.update({
       where: { id },

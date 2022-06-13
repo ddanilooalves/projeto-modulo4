@@ -6,34 +6,25 @@ export class HomepageService {
   constructor(private readonly prisma: PrismaService) {}
 
   async findByGender(id: string) {
-    const favorite = await this.prisma.relation2.findUnique({
+    const favorite = await this.prisma.profile.findUnique({
       where: {
         id,
       },
       select: {
-        profile: {
-          select: {
-            name: true,
-          },
-        },
-        game: {
+        name: true,
+        games: {
           select: {
             name: true,
           }
         },
-        favorite: true,
       },
     });
 
-    const genders = await this.prisma.relation.findMany({
+    const genders = await this.prisma.gender.findMany({
       select: {
         id: true,
-        gender: {
-          select: {
-            name: true,
-          },
-        },
-        gamers: {
+        name: true,
+        games: {
           select: {
             name: true,
           },

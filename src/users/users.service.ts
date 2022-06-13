@@ -69,8 +69,6 @@ export class UsersService {
 
   async delete(id: string) {
     await this.findById(id);
-    await this.prisma.user.delete({ where: { id }});
+    await this.prisma.user.delete({ where: { id } });
   }
-
-  
 }

@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma/prisma.service';
 import { handleError } from 'src/utility/handle-error.utility';
 import { CreateGamesDto } from './dto/create-games.dto';
@@ -25,22 +26,39 @@ export class GamesService {
     return this.findById(id);
   }
 
-  async create(dto: CreateGamesDto): Promise<Games> {
-    const data: Games = { ...dto };
-    try {
-      return await this.prisma.games.create({ data });
-    } catch (err) {
-      return handleError(err);
-    }
+  async create(dto: CreateGamesDto) {
+    const data: Prisma.GamesCreateInput = {
+      ...dto,
+      gender: {
+        connect: dto.gender.map((genderId)=> ({
+        id: genderId
+      }))}
+      };
+
+      return await this.prisma.games.create({ 
+        data, 
+        select: {
+          id: true,
+          name: true,
+          gender: {
+            select: {
+              name: true,
+              },
+            },
+          }}).catch(handleError);
   }
 
   async update(id: string, dto: UpdateGamesDto): Promise<Games> {
     await this.findById(id);
-    const data: Partial<Games> = { ...dto };
+    const data: Partial<Prisma.GamesCreateInput> = { ...dto,
+      gender: {connect: dto.gender.map((genderId) => ({
+        id: genderId
+      }))}
+    };
 
     return this.prisma.games.update({
       where: { id },
-      data
+      data,
     }).catch(handleError);
   }
 
