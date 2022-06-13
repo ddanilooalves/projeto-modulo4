@@ -1,6 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Prisma, User } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma/prisma.service';
+import { UnsubscriptionError } from 'rxjs';
 import { handleError } from 'src/utility/handle-error.utility';
 import { CreateGamesDto } from './dto/create-games.dto';
 import { UpdateGamesDto } from './dto/update-games.dto';
@@ -26,7 +27,10 @@ export class GamesService {
     return this.findById(id);
   }
 
-  async create(dto: CreateGamesDto) {
+  async create(user: User, dto: CreateGamesDto) {
+    if (!user.isAdmin) {
+      throw new UnauthorizedException('Usuário não se encaixa na categória admin')
+    }
     const data: Prisma.GamesCreateInput = {
       ...dto,
       gender: {
@@ -48,7 +52,10 @@ export class GamesService {
           }}).catch(handleError);
   }
 
-  async update(id: string, dto: UpdateGamesDto): Promise<Games> {
+  async update(user: User, id: string, dto: UpdateGamesDto): Promise<Games> {
+    if (!user.isAdmin) {
+      throw new UnauthorizedException('Usuário não se encaixa na categória admin')
+    }
     await this.findById(id);
     const data: Partial<Prisma.GamesCreateInput> = { ...dto,
       gender: {connect: dto.gender.map((genderId) => ({
@@ -62,8 +69,11 @@ export class GamesService {
     }).catch(handleError);
   }
 
-  async delete(id: string) {
+  async delete(user: User, id: string) {
+    if (!user.isAdmin) {
+      throw new UnauthorizedException('Usuário não se encaixa na categória admin')
+    }
     await this.findById(id);
-    await this.prisma.games.delete({ where: { id }});
+    await this.prisma.games.delete({ where: { id }}).catch(handleError);
   }
 }

@@ -1,10 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma/prisma.service';
 import { CreateUsersDto } from './dto/create-users.dto';
 import { UpdateUsersDto } from './dto/update-users.dto';
 import { Users } from './entities/users.entity';
 import * as bcrypt from 'bcrypt';
 import { handleError } from 'src/utility/handle-error.utility';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -52,7 +53,11 @@ export class UsersService {
     }).catch(handleError);
   }
 
-  async update(id: string, dto: UpdateUsersDto): Promise<Users> {
+  async update(user: User, id: string, dto: UpdateUsersDto): Promise<Users> {
+    if (!user.isAdmin) {
+      throw new UnauthorizedException('Usuário não se encaixa na categória admin')
+    }
+    
     await this.findById(id);
     const data: Partial<Users> = { ...dto };
 
@@ -67,7 +72,11 @@ export class UsersService {
     }).catch(handleError);
   }
 
-  async delete(id: string) {
+  async delete(user: User, id: string) {
+    if (!user.isAdmin) {
+      throw new UnauthorizedException('Usuário não se encaixa na categória admin')
+    }
+    
     await this.findById(id);
     await this.prisma.user.delete({ where: { id } });
   }

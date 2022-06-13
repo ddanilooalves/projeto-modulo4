@@ -1,4 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { User } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma/prisma.service';
 import { handleError } from 'src/utility/handle-error.utility';
 import { CreateGenderDto } from './dto/create-gender.dto';
@@ -25,7 +26,11 @@ export class GendersService {
     return this.findById(id);
   }
 
-  async create(dto: CreateGenderDto): Promise<Gender> {
+  async create(user: User, dto: CreateGenderDto): Promise<Gender> {
+    if (!user.isAdmin) {
+      throw new UnauthorizedException('Usuário não se encaixa na categória admin')
+    }
+    
     const data: Gender = { ...dto };
     try {
       return await this.prisma.gender.create({ data });
@@ -34,7 +39,11 @@ export class GendersService {
     }
   }
 
-  async update(id: string, dto: UpdateGenderDto): Promise<Gender> {
+  async update(user: User, id: string, dto: UpdateGenderDto): Promise<Gender> {
+    if (!user.isAdmin) {
+      throw new UnauthorizedException('Usuário não se encaixa na categória admin')
+    }
+
     await this.findById(id);
     const data: Partial<Gender> = { ...dto };
 
@@ -44,7 +53,11 @@ export class GendersService {
     }).catch(handleError);
   }
 
-  async delete(id: string) {
+  async delete(user: User, id: string) {
+    if (!user.isAdmin) {
+      throw new UnauthorizedException('Usuário não se encaixa na categória admin')
+    }
+    
     await this.findById(id);
     await this.prisma.gender.delete({ where: { id }});
   }

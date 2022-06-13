@@ -5,6 +5,8 @@ import { UpdateGamesDto } from './dto/update-games.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Games } from './entities/games.entity';
 import { AuthGuard } from '@nestjs/passport';
+import { LoggedUser } from 'src/auth/logged-user.decorator';
+import { User } from '@prisma/client';
 
 @ApiTags('games')
 @Controller('games')
@@ -17,8 +19,8 @@ export class GamesController {
   })
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  create(@Body() createGamesDto: CreateGamesDto) {
-    return this.gamesService.create(createGamesDto);
+  create(@LoggedUser() user: User, @Body() createGamesDto: CreateGamesDto) {
+    return this.gamesService.create(user, createGamesDto);
   }
 
   @Get()
@@ -43,8 +45,8 @@ export class GamesController {
   })
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  update(@Param('id') id: string, @Body() updateGamesDto: UpdateGamesDto): Promise<Games> {
-    return this.gamesService.update(id, updateGamesDto);
+  update(@LoggedUser() user: User, @Param('id') id: string, @Body() updateGamesDto: UpdateGamesDto): Promise<Games> {
+    return this.gamesService.update(user, id, updateGamesDto);
   }
 
   @Delete(':id')
@@ -54,7 +56,7 @@ export class GamesController {
   })
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  delete(@Param('id') id: string) {
-    this.gamesService.delete(id);
+  delete(@LoggedUser() user: User, @Param('id') id: string) {
+    return this.gamesService.delete(user, id);
   }
 }

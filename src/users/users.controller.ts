@@ -5,6 +5,8 @@ import { UsersService } from './users.service';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UpdateUsersDto } from './dto/update-users.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { LoggedUser } from 'src/auth/logged-user.decorator';
+import { User } from '@prisma/client';
 
 @ApiTags('users')
 @Controller('users')
@@ -45,8 +47,8 @@ export class UsersController {
   })
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  update(@Param('id') id: string, @Body() dto: UpdateUsersDto): Promise<Users> {
-    return this.usersService.update(id, dto);
+  update(@LoggedUser() user: User, @Param('id') id: string, @Body() dto: UpdateUsersDto): Promise<Users> {
+    return this.usersService.update(user, id, dto);
   }
   
   @Delete(':id')
@@ -56,7 +58,7 @@ export class UsersController {
   })
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  delete(@Param('id') id: string) {
-    return this.usersService.delete(id);
+  delete(@LoggedUser() user: User, @Param('id') id: string) {
+    return this.usersService.delete(user, id);
   }
 }
